@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="fragments/main_layout"></th:block>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            There was an error  |<span th:text="${message}"></span>| <span th:text="${status}" class="text text-danger"></span>
+            Please contact SambaMedia if you have reached this far!!!!
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
