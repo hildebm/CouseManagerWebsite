@@ -1,12 +1,13 @@
 package org.sambasoft.login.entities;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User implements Serializable {
@@ -49,6 +50,9 @@ public class User implements Serializable {
 			@JoinColumn(name = "ROLE_NAME", referencedColumnName = "name") })
 	private List<Role> roles;
 
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "user_course", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "courseid") })
+	private Set<Course> courses = new HashSet<Course>(0);
 
 	/*constructora*/
 
@@ -91,6 +95,25 @@ public class User implements Serializable {
 		this.email = email;
 		this.name = name;
 		this.password = password;
+	}
+
+	public User(@Email @NotEmpty String email, @NotEmpty String firstName, @Size(min = 4) @NotEmpty String lastName, @Size(min = 4) String gender, String birthDate, String phoneNumber, String address, String city, String state, int zip, String about, String name, String password, List<Task> tasks, List<Role> roles, Set<Course> courses) {
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.birthDate = birthDate;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.about = about;
+		this.name = this.firstName + " " + this.lastName;;
+		this.password = password;
+		this.tasks = tasks;
+		this.roles = roles;
+		this.courses = courses;
 	}
 
 	public User() {
@@ -236,4 +259,29 @@ public class User implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Set<Course> getCourses() {
+		return this.courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+
+	public boolean hasCourse(Course course) {
+		for (Course studentCourse: getCourses()) {
+			if (studentCourse.getCourseid() == course.getCourseid()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void removeCourse(Course course)
+	{
+		if(hasCourse(course)){
+			this.courses.remove(course);
+		}
+	}
+
 }

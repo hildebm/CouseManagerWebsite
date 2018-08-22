@@ -25,6 +25,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" th:href="@{/contact}">Contact Us</a>
             <a class="dropdown-item" th:href="@{/impressium}">Impressium</a>
+            <a class="dropdown-item" th:href="@{/proTasks}">Programmer Tasks</a>
           </div>
         </li>
         <li>
@@ -39,7 +40,7 @@
       <h1 class="display-4">Fluid jumbotron</h1>
       <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
       <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-primary">Sign Up</a>
-      <a th:href="@{/openCourse}" sec:authorize="isAuthenticated()" class="btn btn-primary">Open a Course</a>
+      <a th:href="@{/course/new}" sec:authorize="isAuthenticated()" class="btn btn-primary">Open a Course</a>
     </div>
   </div>
 

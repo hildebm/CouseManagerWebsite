@@ -43,6 +43,18 @@ public class UserService {
 		user.setRoles(roles);
 		userRepository.save(user);
 	}
+
+	public void createInstructor(User user) {
+		BCryptPasswordEncoder  encoder = new  BCryptPasswordEncoder();
+		user.setPassword(encoder.encode(user.getPassword()));
+		Role userRole = new Role("USER");
+		Role instructorRole = new Role("INSTRUCTOR");
+		List<Role> roles = new ArrayList<>();
+		roles.add(userRole);
+		roles.add(instructorRole);
+		user.setRoles(roles);
+		userRepository.save(user);
+	}
 	
 	public User findOne(String email) {
 		
@@ -85,6 +97,7 @@ public class UserService {
 		User currentUser = findById(id);
 		currentUser.setAddress(user.getAddress());
 		currentUser.setCity(user.getCity());
+		currentUser.setState(user.getState());
 		currentUser.setZip(user.getZip());
 		currentUser.setBirthDate(user.getBirthDate());
 		currentUser.setEmail(user.getEmail());
